@@ -19,13 +19,11 @@
     //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //
     require('dotenv').config();
-    const cron = require('node-cron');
+    // const cron = require('node-cron');
     const { PORT, SYNC_FORCE } = process.env;
-    const {server,serverSocket,io} = require('./src/app.js');
-    const { conn, People } = require('./src/db.js');
-    const updateAges = require('./src/utils/updateAges.js');
-
-    // Función para actualizar la edad
+    const {server} = require('./src/app.js');
+    const { conn } = require('./src/db.js');
+    
     async function startServer() {
         try {
             await conn.authenticate();
@@ -36,19 +34,9 @@
 
             console.log('Performing maintenance tasks...');
             // Ejecutar la tarea de actualización al iniciar el servidor
-            updateAges()
-
-            // Ejecutar la tarea de actualización cada día a las 00:00
-            cron.schedule('0 0 * * *', async () => {
-                console.log('Performing scheduled tasks...');
-                //contorl de age
-                updateAges()    
-
-                console.log(`Server listening at ${PORT}`);
-            });
-
+    
             // Resto de la configuración y rutas de tu servidor
-            serverSocket.listen(PORT, () => {
+            server.listen(PORT, () => {
                 console.log(`Server listening at ${PORT}`);
             });
         } catch (error) {
