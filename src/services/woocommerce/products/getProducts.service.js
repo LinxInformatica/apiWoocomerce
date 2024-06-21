@@ -1,18 +1,24 @@
-const { Familias } = require('../../db');
-const { Op } = require('sequelize');
+const { WooCommerce } = require("../../../wooCommerce");
 
-const getFamiliasService = async (parameters = {}) => {
-  //
-  // filtros
-  const found = await Familias.findAll(
-  );
+const getProductsService = async () => {
 
-  const count = found.length;
-  const familias = {
-    records:count,
-    data: found,
-  };
-  return { familias };
+    const response = await WooCommerce.get("products")
+    const products=response.data.map((product)=>({
+        id:product.id,
+        name:product.name,
+        sku:product.sku,
+        status:product.status,
+        stock_quantity:product.stock_quantity,
+        price:product.price,
+        regular_price:product.regular_price
+    }))
+    const wcProducts={
+        records:products.length,
+        data:products
+    }
+    return {wcProducts}
+
+    
 };
 
-module.exports = getFamiliasService;
+module.exports = getProductsService;

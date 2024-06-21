@@ -1,4 +1,4 @@
-const getArticulosService = require("../../services/articulos/getArticulos.service");
+const getArticulosService = require("../../../services/linx/articulos/getArticulos.service");
 
 
 const getArticulosController = async (req, res) => {

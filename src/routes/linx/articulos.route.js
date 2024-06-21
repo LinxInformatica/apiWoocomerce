@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const getArticulosController = require('../controllers/articulos/getArticulos.controller');
+const getArticulosController = require('../../controllers/linx/articulos/getArticulos.controller');
 
 
 // controllers

@@ -1,4 +1,4 @@
-const getFamiliasService = require("../../services/familias/getFamilias.service");
+const getFamiliasService = require("../../../services/linx/familias/getFamilias.service");
 
 const getFamiliasController = async (req, res) => {
   try {

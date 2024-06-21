@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const getFamiliasController = require('../controllers/familias/getFamilias.controller');
+const getFamiliasController = require('../../controllers/linx/familias/getFamilias.controller');
 
 
 
