@@ -5,7 +5,7 @@ const getProductsController = async (req, res) => {
 
     const response = await getProductsService();
 
-0    res.status(200).json(response);
+    res.status(200).json(response);
 
   } catch (error) {
     

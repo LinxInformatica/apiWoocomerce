@@ -1,13 +1,11 @@
 const { Router } = require("express");
 const router = Router();
 
-const familiasRouter = require("./linx/familias.route.js");
-const articulosRouter = require("./linx/articulos.route.js");
 const productsRouter = require("./wooCommerce/products.route.js");
+const apiDatosRouter = require("./linx/apidatos.route.js");
 
 //local
-router.use(familiasRouter);
-router.use(articulosRouter)
+router.use(apiDatosRouter)
 
 // wooCommerce
 router.use(productsRouter)

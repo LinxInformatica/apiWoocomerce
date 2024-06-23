@@ -3,6 +3,7 @@ const { WooCommerce } = require("../../../wooCommerce");
 const getProductsService = async () => {
 
     const response = await WooCommerce.get("products")
+    
     const products=response.data.map((product)=>({
         id:product.id,
         name:product.name,
