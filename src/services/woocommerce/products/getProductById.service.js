@@ -3,7 +3,6 @@ const { WooCommerce } = require("../../../wooCommerce");
 const getProductByIdService = async (id) => {
 
     const response = await WooCommerce.get(`products/${id}`)
-
     if(response.data){
         const product={
             id:response.data.id,
