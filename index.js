@@ -22,8 +22,6 @@
     // const cron = require('node-cron');
     // import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api"; // Supports ESM
 
-    const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
-    
     const { PORT, SYNC_FORCE } = process.env;
     const {server} = require('./src/app.js');
     const { conn } = require('./src/db.js');
