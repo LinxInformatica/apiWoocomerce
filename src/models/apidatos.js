@@ -61,6 +61,10 @@ module.exports = (sequelize) => {
       FECHAINACTIVO: {
         type: DataTypes.DATE,
         allowNull: true
+      },
+      LINK: {
+        type: DataTypes.STRING(5000),
+        allowNull: true
       }
     })
 };
