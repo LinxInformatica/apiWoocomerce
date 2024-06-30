@@ -4,7 +4,6 @@ const { Op } = require('sequelize');
 
 const putApiCabezeraService = async (params = {}) => {
     const {where,fields}=params
-    console.log(where,fields)
     //
     // filtros
     await ApiCabezera.update(

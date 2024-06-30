@@ -6,8 +6,7 @@ const postProductsBatchService = require('../services/woocommerce/products/postP
 const procesarPendientes = async () => {
     const params = { ACTUALIZANDO: 1, ACTIVA: 1 }
     const pendientes = await getApiCabezeraService(params)
-    console.log(pendientes.apiCabezera.records)
-
+    
     if (!pendientes) return;
     if (pendientes.apiCabezera.records==0) return;
 

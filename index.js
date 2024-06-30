@@ -54,8 +54,7 @@ async function startServer() {
                     isRunning = false;
                 }
             }
-            console.log(`running ${isRunning}`)
-
+            
         });
         // Resto de la configuración y rutas de tu servidor
         server.listen(PORT, () => {

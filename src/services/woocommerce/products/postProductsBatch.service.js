@@ -49,7 +49,6 @@ const postProductsBatchService = async (IDINTERNOAPICABEZERA, TIPODATO) => {
 
         try {
             const response = await WooCommerce.post("products/batch", data)
-            console.log(response.data)
             //leo objeto devuelto
             if (response.data.create) {
                 const actualizaId = response.data.create.forEach(product => {

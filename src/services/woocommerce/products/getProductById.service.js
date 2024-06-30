@@ -1,18 +1,12 @@
 const { WooCommerce } = require("../../../wooCommerce");
+const normalizeProducts = require("../../../utils/normalizeProducts");
 
 const getProductByIdService = async (id) => {
 
     const response = await WooCommerce.get(`products/${id}`)
     if(response.data){
-        const product={
-            id:response.data.id,
-            name:response.data.name,
-            sku:response.data.sku,
-            status:response.data.status,
-            stock_quantity:response.data.stock_quantity,
-            price:response.data.price,
-            regular_price:response.data.regular_price
-        }
+        const product=normalizeProducts(response.data)
+
         const wcProducts={
             records:1,
             data:product
