@@ -48,9 +48,11 @@ const postProductsBatchService = async (IDINTERNOAPICABEZERA, TIPODATO) => {
         }
 
         try {
+            console.log('POST products/batch')
             const response = await WooCommerce.post("products/batch", data)
             //leo objeto devuelto
             if (response.data.create) {
+                console.log('UPDATE apiDatos')
                 const actualizaId = response.data.create.forEach(product => {
                     putApiDatosService({
                         where: { SKU: product.sku },
@@ -60,8 +62,7 @@ const postProductsBatchService = async (IDINTERNOAPICABEZERA, TIPODATO) => {
                         }
                     })
                 });
-                await Promises.all(actualizaId)
-                
+                await Promise.all(actualizaId)
             }
 
         } catch (error) {

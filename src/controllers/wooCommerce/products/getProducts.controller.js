@@ -3,7 +3,7 @@ const getProductsService = require("../../../services/woocommerce/products/getPr
 const getProductsController = async (req, res) => {
   try {
 
-    const response = await getProductsService();
+    const response = await getProductsService(req.query);
 
     res.status(200).json(response);
 
