@@ -8,6 +8,7 @@ const putApiCabezeraController = require('../../controllers/linx/apicabezera/put
 const apiCabezeraRouter = Router();
 
 apiCabezeraRouter.get('/apiCabezera', getApiCabezeraController);
+
 apiCabezeraRouter.put('/apiCabezera', putApiCabezeraController);
 
 module.exports = apiCabezeraRouter;
