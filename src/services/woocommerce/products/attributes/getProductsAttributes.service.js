@@ -1,11 +1,12 @@
+const normalizeAttributes = require("../../../../utils/normalizeAttributes");
 const { WooCommerce } = require("../../../../wooCommerce");
 
 const getProductsAttributesService = async () => {
 
     const response = await WooCommerce.get("products/attributes")
     
-    const attributtes=response.data //.map((product)=>normalizeProducts(product))
-    console.log(response)
+    const attributtes=response.data.map((attribute)=>normalizeAttributes(attribute))
+
     const wcAttributes={
         records:attributtes.length,
         data:attributtes

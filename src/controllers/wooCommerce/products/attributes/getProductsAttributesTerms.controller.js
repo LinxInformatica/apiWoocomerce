@@ -2,7 +2,9 @@ const getProductsAttributesTermsService = require("../../../../services/woocomme
 
 const getProductsAttributesTermsController = async (req, res) => {
   try {
-    const {id,attribute_id,page,per_page}=req.query
+    const {id,attribute_id,per_page}=req.query
+    let  {page}=req.query
+    
     if(!page) page=1;
 
     const response = await getProductsAttributesTermsService({id,attribute_id,page,per_page});
