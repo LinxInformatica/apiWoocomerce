@@ -22,6 +22,7 @@ require('dotenv').config();
 // const cron = require('node-cron');
 // import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api"; // Supports ESM
 const cron = require('node-cron');
+const ip = require('ip')
 
 const { PORT, SYNC_FORCE } = process.env;
 const { server } = require('./src/app.js');
@@ -58,7 +59,7 @@ async function startServer() {
         });
         // Resto de la configuración y rutas de tu servidor
         server.listen(PORT, () => {
-            console.log(`Server listening at ${PORT}`);
+            console.log(`Server listening at ${ip.address()}:${PORT}`);
         });
 
     } catch (error) {

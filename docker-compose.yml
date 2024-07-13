@@ -1,17 +1,45 @@
-version: '3.8'
 services:
-  app:
-    container_name: Woocommerce
-    build:
-      context: .
-      dockerfile: Dockerfile
+  mysql:
+    image: mysql:latest
+    container_name: linx-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: Fernando52.
+      MYSQL_DATABASE: sahade
+      MYSQL_USER: linx
+      MYSQL_PASSWORD: Fernando52
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+
+  node-app:
+    build: .
     ports:
       - "3001:3001"
-    env_file:
-      - .env
+    environment:
+      DB_HOST: mysql
+      DB_USER: linx
+      DB_PASSWORD: Fernando52
+      DB_NAME: sahade
+      ACCESS_CONTROL_ALLOW_ORIGIN: 'http://localhost:5173'
+      SSL: 'false'
+      DIALECT_OPTIONS: '{}'
+    depends_on:
+      - mysql
     networks:
       - app-network
 
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: "C:/Sistemas/Data"
+      o: bind
