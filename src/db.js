@@ -2,6 +2,8 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 
+const defineRelations=require('../src/relations/relations');
+
 const {
     DB_USER, DB_PASSWORD, DB_HOST, DIALECT_OPTIONS, SSL, DB_NAME
 } = process.env;
@@ -18,7 +20,7 @@ const sequelize = new Sequelize(`mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${
         },
         dialectOptions: JSON.parse(DIALECT_OPTIONS),
         query: {
-            raw: true, // Establece raw: true globalmente
+            raw: false, // Establece raw: true globalmente
         },
     }
 );
@@ -41,11 +43,7 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-// En sequelize.models están todos los modelos importados como propiedades
-// Para relacionarlos hacemos un destructuring
-//const { familias } = sequelize.models;
-
-// Relaciones
+defineRelations(sequelize);
 
 module.exports = {
     ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

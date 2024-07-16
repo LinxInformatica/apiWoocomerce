@@ -144,5 +144,13 @@ module.exports = (sequelize) => {
             allowNull: false,
             defaultValue: ''
         }
+    }, {
+        indexes: [
+            // Create a unique index on email
+            {
+                unique: true,
+                fields: ['IDINTERNOAPICABEZERA'],
+            },
+        ]
     })
 };
