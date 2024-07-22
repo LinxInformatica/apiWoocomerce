@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
     // defino el modelo
-    sequelize.define('gAtributos', {
+    const GAtributos=sequelize.define('GAtributos', {
         IDATRIBUTO: {
             type: DataTypes.STRING(10),
             allowNull: false,
@@ -27,4 +27,5 @@ module.exports = (sequelize) => {
             autoIncrement: true
         }
     })
+    return GAtributos
 };

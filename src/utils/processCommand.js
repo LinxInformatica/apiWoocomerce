@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 const getApiCabezeraService = require('../services/linx/apicabezera/getApiCabezera.service');
 const postProductsBatchService = require('../services/woocommerce/products/postProductsBatch.service');
 
-const procesarPendientes = async () => {
+const processCommand = async () => {
     const params = { ACTUALIZANDO: 1, ACTIVA: 1 }
     const pendientes = await getApiCabezeraService(params)
     
@@ -17,7 +17,7 @@ const procesarPendientes = async () => {
         switch (comando[0]) {
             case 'postProductsBatch':
                 try {
-                    await postProductsBatchService(IDINTERNOAPICABEZERA, 1)
+                    await postProductsBatchService(IDINTERNOAPICABEZERA)
                 } catch (error) {
                     console.error('Error en procesarPendientes:', error);
                 } finally {
@@ -31,4 +31,4 @@ const procesarPendientes = async () => {
     };
 };
 
-module.exports = procesarPendientes;
+module.exports = processCommand;

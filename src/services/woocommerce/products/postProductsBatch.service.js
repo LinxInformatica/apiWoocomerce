@@ -3,7 +3,7 @@ const putApiCabezeraService = require("../../linx/apicabezera/putApiCabezera.ser
 const getApiDatosService = require("../../linx/apidatos/getApiDatos.service");
 const putApiDatosService = require("../../linx/apidatos/putApiDatos.service");
 
-const postProductsBatchService = async (IDINTERNOAPICABEZERA, TIPODATO) => {
+const postProductsBatchService = async (IDINTERNOAPICABEZERA) => {
     // pongo en 2 procesando
     try {
 
@@ -15,7 +15,7 @@ const postProductsBatchService = async (IDINTERNOAPICABEZERA, TIPODATO) => {
     } catch (error) {
         console.error('Error en postProductsBatchService:', error);
     }
-    const articulos = await getApiDatosService({ IDINTERNOAPICABEZERA, TIPODATO })
+    const articulos = await getApiDatosService({ IDINTERNOAPICABEZERA, TIPODATO:1 })
     if (articulos && articulos.apiDatos.records != 0) {
         // armo el objeto que paso a la api
         const create = articulos.apiDatos.data
@@ -74,7 +74,7 @@ const postProductsBatchService = async (IDINTERNOAPICABEZERA, TIPODATO) => {
     try {
 
         await putApiCabezeraService({
-            where: { IDINTERNOAPICABEZERA: IDINTERNOAPICABEZERA },
+            where: { IDINTERNOAPICABEZERA},
             fields: { ACTUALIZANDO: 0 }
         })
 

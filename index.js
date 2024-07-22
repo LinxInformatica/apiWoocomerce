@@ -20,14 +20,13 @@
 //
 require('dotenv').config();
 // const cron = require('node-cron');
-// import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api"; // Supports ESM
 const cron = require('node-cron');
 const ip = require('ip')
 
-const { PORT, SYNC_FORCE } = process.env;
+const { PORT, SYNC_FORCE } = process.env
 const { server } = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const procesarPendientes = require('./src/utils/procesarPendientes.js');
+const processCommand = require('./src/utils/processCommand.js');
 
 async function startServer() {
     try {
@@ -48,7 +47,7 @@ async function startServer() {
             if (!isRunning) {
                 isRunning = true
                 try {
-                    await procesarPendientes();
+                    await processCommand();
                 } catch (error) {
                     console.error('Error en procesarPendientes:', error);
                 } finally {

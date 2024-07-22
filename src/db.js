@@ -1,12 +1,17 @@
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
-const path = require('path');
+// const path = require('path');
 
-const defineRelations=require('../src/relations/relations');
+const ApiCabezera = require('./models/apicabezera')
+const ApiDatos = require('./models/apidatos')
+const GAtributos = require('./models/gatributos')
+const SArticulosAtributos = require('./models/sarticulosatributos')
 
-const {
-    DB_USER, DB_PASSWORD, DB_HOST, DIALECT_OPTIONS, SSL, DB_NAME
-} = process.env;
+const defineRelations = require('../src/relations/relations');
+
+const { DB_PASSWORD} = require('./env/env.js');
+const { DB_USER, DB_HOST, DIALECT_OPTIONS, SSL, DB_NAME} = process.env
+
 
 const sequelize = new Sequelize(`mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
     {
@@ -18,29 +23,27 @@ const sequelize = new Sequelize(`mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${
             freezeTableName: true,
             timestamps: false,
         },
-        dialectOptions: JSON.parse(DIALECT_OPTIONS),
+        dialectOptions:JSON.parse(DIALECT_OPTIONS),
         query: {
             raw: false, // Establece raw: true globalmente
         },
     }
 );
 
-const basename = path.basename(__filename);
+// const basename = path.basename(__filename);
 
 const modelDefiners = [];
 
-// Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
-fs.readdirSync(path.join(__dirname, '/models'))
-    .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
-    .forEach((file) => {
-        modelDefiners.push(require(path.join(__dirname, '/models', file)));
-    });
-
+modelDefiners.push(ApiCabezera)
+modelDefiners.push(ApiDatos)
+modelDefiners.push(GAtributos)
+modelDefiners.push(SArticulosAtributos)
 // Injectamos la conexion (sequelize) a todos los modelos
+
 modelDefiners.forEach(model => model(sequelize));
 // Capitalizamos los nombres de los modelos ie: product => Product
 let entries = Object.entries(sequelize.models);
-let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
+let capsEntries = entries.map((entry) => [entry[0], entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
 defineRelations(sequelize);

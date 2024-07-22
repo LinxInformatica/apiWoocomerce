@@ -6,7 +6,7 @@ const getApiDatosService = async (params = {}) => {
     //
     // filtros
     let filtro = []
-    const { IDINTERNOAPICABEZERA, TIPODATO, SKU, IDPUBLICADO } = params;
+    const { IDINTERNOAPICABEZERA, TIPODATO, SKU, IDPUBLICADO} = params;
     if (SKU) {
         filtro.push({ SKU })
     }
@@ -19,6 +19,8 @@ const getApiDatosService = async (params = {}) => {
     if (TIPODATO) {
         filtro.push({ TIPODATO })
     }
+    
+    filtro.push({IDINTERNOVARIACION: {[Op.eq]:0}}) //solo articulos, no variacionesd
 
     //busqueda
     const found = await ApiDatos.findAll(
@@ -40,6 +42,7 @@ const getApiDatosService = async (params = {}) => {
                     as: 'Variaciones',
                     attributes: [
                         'IDINTERNODATO',
+                        'IDINTERNOVARIACION',
                         'SKU',
                         'IDPUBLICADO',
                         'DESCRIPCION',
@@ -51,12 +54,20 @@ const getApiDatosService = async (params = {}) => {
                     ],
                     include: [
                         {
+                            attributes: [
+                                'IDATRIBUTO'
+                            ],
                             model: SArticulosAtributos,
-                            as: 'apidatos_articulosAtributos',
+                            as: 'Atributos',
                             include: [
                                 {
+                                    attributes: [
+                                        'SKU',
+                                        'IDPUBLICADO',
+                                        'DESCRIPCION',
+                                    ],
                                     model: ApiDatos,
-                                    as: 'articulosatributos_atributos'
+                                    as: 'AtributosLeyenda'
                                 }
                             ]
                         }
@@ -70,6 +81,7 @@ const getApiDatosService = async (params = {}) => {
     const count = found.length;
     const apiDatos = {
         records: count,
+        fitler:filtro,
         data: found,
     };
     return { apiDatos };

@@ -3,7 +3,7 @@ const { DataTypes, INTEGER } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
     // defino el modelo
-    sequelize.define('apiDatos', {
+    const ApiDatos=sequelize.define('ApiDatos', {
         IDAPIDATOS: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -81,4 +81,6 @@ module.exports = (sequelize) => {
         ]
     }
     )
+
+    return ApiDatos
 };

@@ -3,7 +3,7 @@ const { DataTypes, INTEGER } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
     // defino el modelo
-    sequelize.define('apiCabezera', {
+    const ApiCabezera=sequelize.define('ApiCabezera', {
         IDINTERNOAPICABEZERA: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -153,4 +153,6 @@ module.exports = (sequelize) => {
             },
         ]
     })
+
+    return ApiCabezera;
 };

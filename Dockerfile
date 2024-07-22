@@ -1,5 +1,6 @@
 # Usa una imagen base de Node.js
-FROM node:20.11.1
+# FROM node:alpine
+FROM stefanscherer/node-windows
 
 # Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app

@@ -2,8 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
-const path = require('path');
-const { ACCESS_CONTROL_ALLOW_ORIGIN } = process.env;
+const { ACCESS_CONTROL_ALLOW_ORIGIN } = process.env
 
 const http = require('http');
 

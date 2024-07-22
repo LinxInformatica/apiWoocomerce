@@ -25,7 +25,7 @@ module.exports = (sequelize) => {
     ApiDatos.hasMany(SArticulosAtributos, {
         foreignKey: 'IDINTERNOARTICULO',
         sourceKey: 'IDINTERNODATO',
-        as: 'apidatos_articulosAtributos'
+        as: 'Atributos'
     })
 
     SArticulosAtributos.belongsTo(ApiDatos, {
@@ -43,7 +43,7 @@ module.exports = (sequelize) => {
     SArticulosAtributos.belongsTo(ApiDatos, {
         foreignKey: 'IDATRIBUTO',
         targetKey: 'SKU',
-        as: 'articulosatributos_atributos'
+        as: 'AtributosLeyenda'
     })
 
 
