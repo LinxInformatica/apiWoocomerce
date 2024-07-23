@@ -23,10 +23,13 @@ require('dotenv').config();
 const cron = require('node-cron');
 const ip = require('ip')
 
-const { PORT, SYNC_FORCE } = process.env
+const { PORT, SYNC_FORCE, TIMER } = process.env
+
 const { server } = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const processCommand = require('./src/utils/processCommand.js');
+
+const timer = TIMER ? TIMER : 10
 
 async function startServer() {
     try {
@@ -41,8 +44,10 @@ async function startServer() {
 
         // Ejecutar control cada 10 segs
         console.log('Loading scheduled tasks...');
+        console.log(`Checking updates every ${timer} seconds...`);
+
         let isRunning = false
-        cron.schedule('*/10 * * * * *', async () => {
+        cron.schedule(`*/${timer} * * * * *`, async () => {
             //contorl de age
             if (!isRunning) {
                 isRunning = true
@@ -54,7 +59,7 @@ async function startServer() {
                     isRunning = false;
                 }
             }
-            
+
         });
         // Resto de la configuración y rutas de tu servidor
         server.listen(PORT, () => {

@@ -17,7 +17,8 @@ const processCommand = async () => {
         switch (comando[0]) {
             case 'postProductsBatch':
                 try {
-                    await postProductsBatchService(IDINTERNOAPICABEZERA)
+                    const IDPUBLICADO=comando[1]
+                    await postProductsBatchService(IDINTERNOAPICABEZERA,IDPUBLICADO)
                 } catch (error) {
                     console.error('Error en procesarPendientes:', error);
                 } finally {

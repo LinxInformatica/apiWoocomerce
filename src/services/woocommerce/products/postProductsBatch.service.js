@@ -1,9 +1,10 @@
+const mapArticulo = require("../../../utils/mapArticulo");
 const { WooCommerce } = require("../../../wooCommerce");
 const putApiCabezeraService = require("../../linx/apicabezera/putApiCabezera.service");
 const getApiDatosService = require("../../linx/apidatos/getApiDatos.service");
 const putApiDatosService = require("../../linx/apidatos/putApiDatos.service");
 
-const postProductsBatchService = async (IDINTERNOAPICABEZERA) => {
+const postProductsBatchService = async (IDINTERNOAPICABEZERA,IDPUBLICADO) => {
     // pongo en 2 procesando
     try {
 
@@ -15,38 +16,22 @@ const postProductsBatchService = async (IDINTERNOAPICABEZERA) => {
     } catch (error) {
         console.error('Error en postProductsBatchService:', error);
     }
-    const articulos = await getApiDatosService({ IDINTERNOAPICABEZERA, TIPODATO:1 })
+    const articulos = await getApiDatosService({ IDINTERNOAPICABEZERA, TIPODATO: 1,IDPUBLICADO})
+
     if (articulos && articulos.apiDatos.records != 0) {
         // armo el objeto que paso a la api
         const create = articulos.apiDatos.data
             .filter(articulo => articulo.IDPUBLICADO === "0")
-            .map(articulo => ({
-                name: articulo.DESCRIPCION,
-                sku: articulo.SKU,
-                stock_quantity: articulo.CANTIDAD,
-                price: articulo.PRECIOPUPLICADO,
-                regular_price: articulo.PRECIOREAL,
-                catalog_visibility: articulo.ACTIVO===1? 'visible' : 'hidden'
-            })
-            )
+            .map(articulo => mapArticulo(articulo))
+
         const update = articulos.apiDatos.data
             .filter(articulo => articulo.IDPUBLICADO !== "0")
-            .map(articulo => ({
-                id: articulo.IDPUBLICADO,
-                name: articulo.DESCRIPCION,
-                sku: articulo.SKU,
-                stock_quantity: articulo.CANTIDAD,
-                price: articulo.PRECIOPUPLICADO,
-                regular_price: articulo.PRECIOREAL,
-                catalog_visibility: articulo.ACTIVO===1? 'visible' : 'hidden'
-            })
-            )
+            .map(articulo => mapArticulo(articulo))
 
         const data = {
             create: create,
             update: update
         }
-
         try {
             console.log('POST products/batch')
             const response = await WooCommerce.post("products/batch", data)
@@ -74,7 +59,7 @@ const postProductsBatchService = async (IDINTERNOAPICABEZERA) => {
     try {
 
         await putApiCabezeraService({
-            where: { IDINTERNOAPICABEZERA},
+            where: { IDINTERNOAPICABEZERA },
             fields: { ACTUALIZANDO: 0 }
         })
 
