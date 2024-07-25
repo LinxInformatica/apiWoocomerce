@@ -1,4 +1,4 @@
-const mapArticulo = require("../../../utils/mapArticulo");
+const createOrUpdateProduct = require("../../../utils/createOrUpdateProduct");
 const { WooCommerce } = require("../../../wooCommerce");
 const putApiCabezeraService = require("../../linx/apicabezera/putApiCabezera.service");
 const getApiDatosService = require("../../linx/apidatos/getApiDatos.service");
@@ -16,29 +16,22 @@ const postProductsBatchService = async (IDINTERNOAPICABEZERA,IDPUBLICADO) => {
     } catch (error) {
         console.error('Error en postProductsBatchService:', error);
     }
+
+    //obtengo los articulos 
     const articulos = await getApiDatosService({ IDINTERNOAPICABEZERA, TIPODATO: 1,IDPUBLICADO})
 
     if (articulos && articulos.apiDatos.records != 0) {
         // armo el objeto que paso a la api
-        const create = articulos.apiDatos.data
-            .filter(articulo => articulo.IDPUBLICADO === "0")
-            .map(articulo => mapArticulo(articulo))
+        const data = createOrUpdateProduct(articulos.apiDatos.data)
 
-        const update = articulos.apiDatos.data
-            .filter(articulo => articulo.IDPUBLICADO !== "0")
-            .map(articulo => mapArticulo(articulo))
-
-        const data = {
-            create: create,
-            update: update
-        }
         try {
             console.log('POST products/batch')
             const response = await WooCommerce.post("products/batch", data)
             //leo objeto devuelto
+            // si hay creados actualizo idpublicado en apidatos
             if (response.data.create) {
                 console.log('UPDATE apiDatos')
-                const actualizaId = response.data.create.forEach(product => {
+                response.data.create.forEach(product => {
                     putApiDatosService({
                         where: { SKU: product.sku },
                         fields: {
@@ -47,7 +40,6 @@ const postProductsBatchService = async (IDINTERNOAPICABEZERA,IDPUBLICADO) => {
                         }
                     })
                 });
-                await Promise.all(actualizaId)
             }
 
         } catch (error) {

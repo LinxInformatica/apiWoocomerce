@@ -1,5 +1,5 @@
-const normalizeProducts = (product,normalize) => {
-    //if (normalize) return { product }
+const normalizeProducts = (product, normalize) => {
+    //return { product }
 
     return {
         id: product.id,
@@ -9,7 +9,8 @@ const normalizeProducts = (product,normalize) => {
         stock_quantity: product.stock_quantity,
         price: product.price,
         regular_price: product.regular_price,
-        variations: product.variations
+        variations: product.variations,
+        attributes: product.attributes
     }
 };
 
