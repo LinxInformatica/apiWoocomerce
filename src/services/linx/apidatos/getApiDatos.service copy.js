@@ -6,7 +6,7 @@ const getApiDatosService = async (params = {}) => {
     //
     // filtros
     let filtro = []
-    const { IDINTERNOAPICABEZERA, TIPODATO, SKU, IDPUBLICADO } = params;
+    const { IDINTERNOAPICABEZERA, TIPODATO, SKU, IDPUBLICADO} = params;
     if (SKU) {
         filtro.push({ SKU })
     }
@@ -19,14 +19,14 @@ const getApiDatosService = async (params = {}) => {
     if (TIPODATO) {
         filtro.push({ TIPODATO })
     }
+    
+    // filtro.push({IDINTERNOVARIACION: {[Op.eq]:0}}) //solo articulos, no variacionesd
 
     //busqueda
     const found = await ApiDatos.findAll(
         {
             attributes: [
-                'IDAPIDATOS',
                 'IDINTERNODATO',
-                'IDINTERNOVARIACION',
                 'SKU',
                 'IDPUBLICADO',
                 'DESCRIPCION',
@@ -38,8 +38,9 @@ const getApiDatosService = async (params = {}) => {
             ],
             include: [
                 {
+                    model: ApiDatos,
+                    as: 'Variaciones',
                     attributes: [
-                        'IDAPIDATOS',
                         'IDINTERNODATO',
                         'IDINTERNOVARIACION',
                         'SKU',
@@ -51,39 +52,28 @@ const getApiDatosService = async (params = {}) => {
                         'ACTIVO',
                         'LINK'
                     ],
-                    model: ApiDatos,
-                    as: 'Variaciones',
-                }
-                ,
-                {
-                    attributes: [
-                        'IDATRIBUTO'
-                    ],
-                    model: SArticulosAtributos,
-                    as: 'Atributos',
                     include: [
                         {
                             attributes: [
-                                'SKU',
-                                'IDPUBLICADO',
-                                'DESCRIPCION',
-                                'IDINTERNOVARIACION'
+                                'IDATRIBUTO'
                             ],
-                            model: ApiDatos,
-                            as: 'AtributosLeyenda',
-                            include: [{
-                                attributes: [
-                                    'DESCRIPCION'
-                                ],
-                                model: ApiDatos,
-                                as: 'AtributosBase'
-                            }]
+                            model: SArticulosAtributos,
+                            as: 'Atributos',
+                            include: [
+                                {
+                                    attributes: [
+                                        'SKU',
+                                        'IDPUBLICADO',
+                                        'DESCRIPCION',
+                                    ],
+                                    model: ApiDatos,
+                                    as: 'AtributosLeyenda'
+                                }
+                            ]
                         }
                     ]
                 }
-            ]
-
-            ,
+            ],
             where: filtro
         });
 
@@ -91,7 +81,7 @@ const getApiDatosService = async (params = {}) => {
     const count = found.length;
     const apiDatos = {
         records: count,
-        filter: filtro,
+        fitler:filtro,
         data: found,
     };
     return { apiDatos };

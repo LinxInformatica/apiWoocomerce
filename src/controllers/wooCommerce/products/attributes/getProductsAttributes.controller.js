@@ -2,7 +2,7 @@ const getProductsAttributesService = require("../../../../services/woocommerce/p
 
 const getProductsAttributesController = async (req, res) => {
   try {
-    console.log('dd')
+
     const response = await getProductsAttributesService();
 
     res.status(200).json(response);

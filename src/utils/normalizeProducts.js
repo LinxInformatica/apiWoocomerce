@@ -10,7 +10,8 @@ const normalizeProducts = (product, normalize) => {
         price: product.price,
         regular_price: product.regular_price,
         variations: product.variations,
-        attributes: product.attributes
+        attributes: product.attributes,
+        default_attributes: product.default_attributes
     }
 };
 

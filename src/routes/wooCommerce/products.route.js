@@ -6,7 +6,7 @@ const getProductsController = require('../../controllers/wooCommerce/products/ge
 
 const productsRouter = Router();
 
-productsRouter.get('/products', getProductsController);
 productsRouter.get('/products/:id', getProductByIdController);
+productsRouter.get('/products', getProductsController);
 
 module.exports = productsRouter;

@@ -1,6 +1,6 @@
 const normalizeAttributes = (attribute) => {
     
-    //if (normalize) return { attribute }
+    return { attribute }
 
     return {
         id: attribute.id,

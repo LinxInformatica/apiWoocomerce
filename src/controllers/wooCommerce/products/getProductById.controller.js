@@ -2,7 +2,6 @@ const getProductByIdService = require("../../../services/woocommerce/products/ge
 
 const getProductByIdController = async (req, res) => {
   try {
-
     const {id} = req.params
     if (!id) return res.status(404).json({ error: 'No se ingreso el Id'});
 
@@ -11,7 +10,6 @@ const getProductByIdController = async (req, res) => {
     res.status(200).json(response);
 
   } catch (error) {
-    
     res.status(500).json({ error: error.message});
   }
 };

@@ -46,5 +46,10 @@ module.exports = (sequelize) => {
         as: 'AtributosLeyenda'
     })
 
+    ApiDatos.belongsTo(ApiDatos, {
+        foreignKey: 'IDINTERNOVARIACION',
+        as: 'AtributosBase'
+    })
+
 
 }

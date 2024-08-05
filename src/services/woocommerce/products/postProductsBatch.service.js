@@ -4,29 +4,19 @@ const putApiCabezeraService = require("../../linx/apicabezera/putApiCabezera.ser
 const getApiDatosService = require("../../linx/apidatos/getApiDatos.service");
 const putApiDatosService = require("../../linx/apidatos/putApiDatos.service");
 
-const postProductsBatchService = async (IDINTERNOAPICABEZERA,IDPUBLICADO) => {
-    // pongo en 2 procesando
-    try {
-
-        await putApiCabezeraService({
-            where: { IDINTERNOAPICABEZERA: IDINTERNOAPICABEZERA },
-            fields: { ACTUALIZANDO: 2 }
-        });
-
-    } catch (error) {
-        console.error('Error en postProductsBatchService:', error);
-    }
+const postProductsBatchService = async (IDINTERNOAPICABEZERA, SKU) => {
 
     //obtengo los articulos 
-    const articulos = await getApiDatosService({ IDINTERNOAPICABEZERA, TIPODATO: 1,IDPUBLICADO})
+    const articulos = await getApiDatosService({ IDINTERNOAPICABEZERA, TIPODATO: 1, SKU })
 
     if (articulos && articulos.apiDatos.records != 0) {
-        // armo el objeto que paso a la api
-        const data = createOrUpdateProduct(articulos.apiDatos.data)
-
+        // armo el objeto que paso a la api SOLO LOS PADRES
+        const articulosSinVariacion = articulos.apiDatos.data.filter(articulo => articulo.IDINTERNOVARIACION === 0)
+        const data = createOrUpdateProduct(articulosSinVariacion)
+        console.log(data.update.map(atr=> atr.attributes))
         try {
             console.log('POST products/batch')
-            const response = await WooCommerce.post("products/batch", data)
+            //const response = await WooCommerce.post("products/batch", data)
             //leo objeto devuelto
             // si hay creados actualizo idpublicado en apidatos
             if (response.data.create) {
@@ -42,21 +32,10 @@ const postProductsBatchService = async (IDINTERNOAPICABEZERA,IDPUBLICADO) => {
                 });
             }
 
+
         } catch (error) {
             console.error('Error en postProductsBatchService:', error);
         }
-    }
-
-    // pongo en 0 procesando
-    try {
-
-        await putApiCabezeraService({
-            where: { IDINTERNOAPICABEZERA },
-            fields: { ACTUALIZANDO: 0 }
-        })
-
-    } catch (error) {
-        console.error('Error en postProductsBatchService:', error);
     }
 
     return
