@@ -37,7 +37,7 @@ async function startServer() {
         console.log('Connection successfully established with the database...');
 
         // Sincronizar el modelo con la base de datos (si es necesario)
-        await conn.sync({ alter: SYNC_FORCE });
+        await conn.sync({ alter: false });
 
         console.log('Performing maintenance tasks...');
         // Ejecutar la tarea de actualización al iniciar el servidor

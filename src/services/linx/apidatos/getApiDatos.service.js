@@ -1,4 +1,4 @@
-const { ApiDatos, ApiCabezera, SArticulosAtributos } = require('../../../db');
+const { ApiDatos, ApiCabezera, Woo_VariacionesAtributos } = require('../../../db');
 
 const { Op } = require('sequelize');
 
@@ -53,36 +53,32 @@ const getApiDatosService = async (params = {}) => {
                     ],
                     model: ApiDatos,
                     as: 'Variaciones',
+                    include: [
+                        {
+                            attributes: [
+                                'IDATRIBUTOPADRE',
+                                'ATRIBUTOPADRE',
+                                'IDATRIBUTO',
+                                'ATRIBUTO'
+                            ],
+                            model: Woo_VariacionesAtributos,
+                            as: 'VariacionAtributos'
+                        }
+                    ]
                 }
                 ,
                 {
                     attributes: [
-                        'IDATRIBUTO'
-                    ],
-                    model: SArticulosAtributos,
-                    as: 'Atributos',
-                    include: [
-                        {
-                            attributes: [
-                                'SKU',
-                                'IDPUBLICADO',
-                                'DESCRIPCION',
-                                'IDINTERNOVARIACION'
-                            ],
-                            model: ApiDatos,
-                            as: 'AtributosLeyenda',
-                            include: [{
-                                attributes: [
-                                    'DESCRIPCION'
-                                ],
-                                model: ApiDatos,
-                                as: 'AtributosBase'
-                            }]
-                        }
-                    ]
-                }
-            ]
+                        'IDATRIBUTOPADRE',
+                        'ATRIBUTOPADRE',
+                        'IDATRIBUTO',
+                        'ATRIBUTO'
 
+                    ],
+                    model: Woo_VariacionesAtributos,
+                    as: 'ArticuloAtributos'
+                },
+            ]
             ,
             where: filtro
         });

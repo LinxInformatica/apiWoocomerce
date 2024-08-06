@@ -4,11 +4,11 @@ const createOrUpdateProduct = (articulos) => {
     //return { product }
     const create = articulos
         .filter(articulo => articulo.IDPUBLICADO === "0")
-        .map(articulo => mapArticulo(articulo))
+        .map(articulo => mapArticulo(articulo,true))
 
     const update = articulos
         .filter(articulo => articulo.IDPUBLICADO !== "0")
-        .map(articulo => mapArticulo(articulo))
+        .map(articulo => mapArticulo(articulo,false))
 
     const salida = {}
     if (create.length > 0) salida.create=create

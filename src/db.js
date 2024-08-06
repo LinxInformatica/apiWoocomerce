@@ -5,7 +5,7 @@ const fs = require('fs');
 const ApiCabezera = require('./models/apicabezera')
 const ApiDatos = require('./models/apidatos')
 const GAtributos = require('./models/gatributos')
-const SArticulosAtributos = require('./models/sarticulosatributos')
+const Woo_VariacionesAtributos=require('./models/woo_variacionesatributos.js')
 
 const defineRelations = require('../src/relations/relations');
 
@@ -37,7 +37,7 @@ const modelDefiners = [];
 modelDefiners.push(ApiCabezera)
 modelDefiners.push(ApiDatos)
 modelDefiners.push(GAtributos)
-modelDefiners.push(SArticulosAtributos)
+modelDefiners.push(Woo_VariacionesAtributos)
 // Injectamos la conexion (sequelize) a todos los modelos
 
 modelDefiners.forEach(model => model(sequelize));

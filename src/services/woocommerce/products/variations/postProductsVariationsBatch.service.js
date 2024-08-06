@@ -12,15 +12,19 @@ const postProductsVariationsBatchService = async (IDINTERNOAPICABEZERA, SKU) => 
         const articulosConVariacion = articulos.apiDatos.data.filter(articulo => articulo.IDINTERNOVARIACION === 0)
         //armo array de objetos con id y variaciones
         const data = createOrUpdateVariations(articulosConVariacion)
-
+        console.log(data)
         try {
-            
+
             for (const variacion of data) {
-                if (variacion.variaciones.create.length > 0 || variacion.variaciones.update.length > 0) {
+                console.log('variacion', variacion)
+                if (variacion.variaciones &&
+                    ((variacion.variaciones.create && variacion.variaciones.create.length > 0) ||
+                        (variacion.variaciones.update && variacion.variaciones.update.length > 0))) {
                     console.log(`products/${variacion.id}/variations/batch`)
                     const response = await WooCommerce.post(`products/${variacion.id}/variations/batch`, variacion.variaciones)
                     //leo objeto devuelto
                     // si hay creados actualizo idpublicado en apidatos
+                    console.log(response.data.data)
                     if (Array.isArray(response.data.create) && response.data.create.length > 0) {
                         console.log('UPDATE apiDatos')
                         for (const product of response.data.create) {

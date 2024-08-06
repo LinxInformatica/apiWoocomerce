@@ -13,10 +13,10 @@ const postProductsBatchService = async (IDINTERNOAPICABEZERA, SKU) => {
         // armo el objeto que paso a la api SOLO LOS PADRES
         const articulosSinVariacion = articulos.apiDatos.data.filter(articulo => articulo.IDINTERNOVARIACION === 0)
         const data = createOrUpdateProduct(articulosSinVariacion)
-        console.log(data.update.map(atr=> atr.attributes))
+        //console.log(data.update.map(atr=> atr.attributes))
         try {
             console.log('POST products/batch')
-            //const response = await WooCommerce.post("products/batch", data)
+            const response = await WooCommerce.post("products/batch", data)
             //leo objeto devuelto
             // si hay creados actualizo idpublicado en apidatos
             if (response.data.create) {

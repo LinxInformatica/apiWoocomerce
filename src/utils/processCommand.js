@@ -27,7 +27,7 @@ const processCommand = async () => {
                     await postProductsBatchService(IDINTERNOAPICABEZERA,SKU)
 
                     // post de variaciones
-                    // await postProductsVariationsBatchService(IDINTERNOAPICABEZERA,SKU)
+                    await postProductsVariationsBatchService(IDINTERNOAPICABEZERA,SKU)
 
                     // pongo a 0 el valor de actalizando
                     await processControl(IDINTERNOAPICABEZERA,0)
