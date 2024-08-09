@@ -19,11 +19,14 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 require('dotenv').config();
+require('./src/utils/logger.js')
+
+
 // const cron = require('node-cron');
 const cron = require('node-cron');
 const ip = require('ip')
 
-const { PORT, SYNC_FORCE, TIMER } = process.env
+const { PORT, SYNC_FORCE, TIMER ,LOGGER} = process.env
 
 const { server } = require('./src/app.js');
 const { conn } = require('./src/db.js');
@@ -33,6 +36,8 @@ const timer = TIMER ? TIMER : 10
 
 async function startServer() {
     try {
+        console.log(`LOGGER = ${LOGGER}`);
+
         await conn.authenticate();
         console.log('Connection successfully established with the database...');
 

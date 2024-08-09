@@ -3,7 +3,7 @@ const getAtributosArticulo = (articulo) => {
         // armo el objeto con OPTION una por cada atributo
         return articulo.VariacionAtributos.map(atributo => {
             return {
-                id: parseInt(atributo.IDATRIBUTOPADRE),
+                id: atributo.IDATRIBUTOPADRE,
                 name: atributo.ATRIBUTOPADRE,
                 option: atributo.ATRIBUTO
             }
@@ -17,7 +17,7 @@ const getAtributosArticulo = (articulo) => {
                 existePadre.options.push(currentValue.ATRIBUTO)
             } else {
                 accumulator.push({
-                    id: parseInt(currentValue.IDATRIBUTOPADRE),
+                    id: currentValue.IDATRIBUTOPADRE,
                     name: currentValue.ATRIBUTOPADRE,
                     visible: true,
                     variation: true,
@@ -26,7 +26,6 @@ const getAtributosArticulo = (articulo) => {
             }
             return accumulator
         }, [])
-
         return result
     }
     return []
