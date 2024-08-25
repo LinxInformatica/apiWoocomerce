@@ -12,7 +12,7 @@ const putApiDatosService = async (params = {}) => {
             where: where
         },
     );
-
+    console.log(fields,'Actualizado OK!')
     return { ApiDatos };
 };
 

@@ -6,7 +6,7 @@ const putApiCabezeraService = async (params = {}) => {
     const {where,fields}=params
     //
     // filtros
-    console.log('UPDATE apiCabezera')
+    console.log(`UPDATE apiCabezera`)
     await ApiCabezera.update(
         fields,
         {

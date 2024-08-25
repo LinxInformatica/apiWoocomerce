@@ -19,7 +19,6 @@ const getApiDatosService = async (params = {}) => {
     if (TIPODATO) {
         filtro.push({ TIPODATO })
     }
-
     //busqueda
     const found = await ApiDatos.findAll(
         {
@@ -62,22 +61,22 @@ const getApiDatosService = async (params = {}) => {
                                 'ATRIBUTO'
                             ],
                             model: Woo_VariacionesAtributos,
-                            as: 'VariacionAtributos'
+                            as: 'VariacionAtributos',
                         }
                     ]
                 }
                 ,
-                {
-                    attributes: [
-                        'IDATRIBUTOPADRE',
-                        'ATRIBUTOPADRE',
-                        'IDATRIBUTO',
-                        'ATRIBUTO'
+                // {
+                //     attributes: [
+                //         'IDATRIBUTOPADRE',
+                //         'ATRIBUTOPADRE',
+                //         'IDATRIBUTO',
+                //         'ATRIBUTO'
 
-                    ],
-                    model: Woo_VariacionesAtributos,
-                    as: 'ArticuloAtributos'
-                },
+                //     ],
+                //     model: Woo_VariacionesAtributos,
+                //     as: 'ArticuloAtributos',
+                // },
             ]
             ,
             where: filtro

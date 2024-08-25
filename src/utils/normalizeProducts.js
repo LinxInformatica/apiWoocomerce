@@ -11,7 +11,8 @@ const normalizeProducts = (product, normalize) => {
         regular_price: product.regular_price,
         variations: product.variations,
         attributes: product.attributes,
-        default_attributes: product.default_attributes
+        default_attributes: product.default_attributes,
+        permalink:product.permalink
     }
 };
 
